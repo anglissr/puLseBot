@@ -25,6 +25,14 @@ async function checkTwitch() {
     if (myJson.data[0].type == "live") { // if the type of stream is "live"
       if (streamingDidNotify == false) {
         console.log("live notify") // notify the discord (id = 635932635914305546)
+        console.log(myJson.data)
+        const embed = new RichEmbed()
+          .setColor('#0099ff')
+          .setTitle("Live now! https://www.twitch.tv/wwupulse")
+          .setURL('https://www.twitch.tv/wwupulse')
+          .addField(myJson.data[0].title)
+          .setImage('https://static-cdn.jtvnw.net/previews-ttv/live_user_wwupulse-1920x1080.jpg')
+          client.channels.get(`635937727556223008`).send(embed)
         streamingDidNotify = true
       }
     }
@@ -39,7 +47,7 @@ client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
   client.user.setActivity(`Serving ${client.guilds.size} servers`);
   client.user.setActivity(`Rocket League`);
-  console.log(client.channels.get('635932635914305546').send("Live"))
+  checkTwitch()
   setInterval( checkTwitch, 30 * 1000 );
 });
 
